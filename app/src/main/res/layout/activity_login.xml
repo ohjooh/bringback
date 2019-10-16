@@ -20,8 +20,8 @@
 
     <EditText
         android:id="@+id/editId"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/edit_text_width"
+        android:layout_height="@dimen/edit_text_height"
         android:layout_marginTop="20dp"
         android:background="@drawable/border_login_edittext"
         android:hint="id"
@@ -37,13 +37,13 @@
 
     <EditText
         android:id="@+id/editPW"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/edit_text_width"
+        android:layout_height="@dimen/edit_text_height"
         android:layout_marginTop="20dp"
         android:background="@drawable/border_login_edittext"
         android:hint="password"
         android:inputType="textPassword"
-        android:paddingStart="12dp"
+        android:paddingStart="@dimen/padding_editText"
         android:textColor="@color/colorBorderLoginEditText"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColorHint="@color/colorHint"

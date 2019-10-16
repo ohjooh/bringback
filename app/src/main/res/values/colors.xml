@@ -7,6 +7,7 @@
     <color name="colorText">#B5B5B5</color>
     <color name="colorHint">#A7A7A7</color>
     <color name="colorButtonText">#33302B</color>
+    <color name="colorTitle">#E0DFDE</color>
     <color name="colorBorderEditText">#929292</color>
     <color name="colorBorderLoginEditText">#DFDFDF</color>
 </resources>
