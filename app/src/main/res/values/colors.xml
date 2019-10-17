@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#33302B</color>
-    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorPrimaryDark">#1D1D1D</color>
     <color name="colorAccent">#B5B5B5</color>
     <color name="colorSecondary">#F2B705</color>
     <color name="colorText">#B5B5B5</color>
@@ -10,4 +10,6 @@
     <color name="colorTitle">#E0DFDE</color>
     <color name="colorBorderEditText">#929292</color>
     <color name="colorBorderLoginEditText">#DFDFDF</color>
+    <color name="colorBottomNavigationViewIcon">#919191</color>
+    <color name="colorLine">#A3A2A2</color>
 </resources>
