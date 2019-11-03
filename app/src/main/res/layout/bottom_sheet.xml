@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:behavior_peekHeight="?actionBarSize"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable="false"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/playerBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#1D1D1D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/playerBarAlbumArt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/playerBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="6dp"
+            android:text="노래 제목"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toEndOf="@+id/playerBarAlbumArt"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/playerBarSinger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="가수"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#CCCCCC"
+            app:layout_constraintStart_toEndOf="@+id/playerBarAlbumArt"
+            app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
+
+        <TextView
+            android:id="@+id/playerBarSlash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="-"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#CCCCCC"
+            app:layout_constraintStart_toEndOf="@+id/playerBarSinger"
+            app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
+
+        <TextView
+            android:id="@+id/playerBarAlbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="앨범"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#CCCCCC"
+            app:layout_constraintStart_toEndOf="@+id/playerBarSlash"
+            app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
+
+        <ImageButton
+            android:id="@+id/playerBarBtnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            android:src="@drawable/ic_fast_rewind_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playerBarBtnPlay"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/playerBarBtnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            android:src="@drawable/ic_pause_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playerBarBtnNext"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/playerBarBtnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            android:src="@drawable/ic_fast_forward_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/player"/>
+
+
+</LinearLayout>

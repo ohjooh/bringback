@@ -12,7 +12,7 @@
         <item name="android:fontFamily">@font/nanum_barun_gothic</item>
     </style>
 
-    <style name="BottomNavagationViewTheme">
+    <style name="BottomNavigationViewTheme">
         <item name="android:fontFamily">@font/nanum_barun_gothic</item>
         <item name="itemIconTint">@drawable/selector_custom_navigationbar</item>
         <item name="itemTextColor">@drawable/selector_custom_navigationbar</item>

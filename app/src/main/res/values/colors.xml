@@ -12,4 +12,5 @@
     <color name="colorBorderLoginEditText">#DFDFDF</color>
     <color name="colorBottomNavigationViewIcon">#919191</color>
     <color name="colorLine">#A3A2A2</color>
+    <color name="colorExplanation">#C7C7C7</color>
 </resources>
