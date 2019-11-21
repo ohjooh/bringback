@@ -13,4 +13,6 @@
     <color name="colorBottomNavigationViewIcon">#919191</color>
     <color name="colorLine">#A3A2A2</color>
     <color name="colorExplanation">#C7C7C7</color>
+    <color name="colorPlayerSingerAndAlbum">#CCCCCC</color>
+    <color name="colorDialogEditBackground">#2F2F2F</color>
 </resources>

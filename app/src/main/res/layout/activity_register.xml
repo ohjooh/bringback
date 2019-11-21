@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,16 +22,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginTop_basic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        android:layout_marginTop="@dimen/marginTop_basic">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editUserId"
@@ -43,10 +40,7 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColorHint="@color/colorBorderEditText" />
 
             <EditText
                 android:id="@+id/editUserPW"
@@ -59,10 +53,7 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserId" />
+                android:textColorHint="@color/colorBorderEditText" />
 
 
             <EditText
@@ -76,10 +67,7 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserPW" />
+                android:textColorHint="@color/colorBorderEditText" />
 
             <EditText
                 android:id="@+id/editUserEmail"
@@ -92,10 +80,7 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserPW2" />
+                android:textColorHint="@color/colorBorderEditText" />
 
             <EditText
                 android:id="@+id/editUserPhoneNumber"
@@ -108,42 +93,21 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserEmail" />
+                android:textColorHint="@color/colorBorderEditText" />
 
-            <EditText
-                android:id="@+id/editUserBirth"
+            <TextView
+                android:id="@+id/textUserBirth"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginTop="@dimen/marginTop_basic"
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
-                android:hint="생년월일"
-                android:padding="@dimen/padding_editText"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserPhoneNumber" />
-
-            <EditText
-                android:id="@+id/editUserSex"
-                android:layout_width="@dimen/edit_text_width"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_marginTop="@dimen/marginTop_basic"
-                android:background="@drawable/border_edittext"
-                android:fontFamily="@font/nanum_barun_gothic"
-                android:hint="성별"
-                android:padding="@dimen/padding_editText"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserBirth" />
+                android:paddingStart="@dimen/padding_editText"
+                android:paddingTop="14dp"
+                android:paddingEnd="@dimen/padding_editText"
+                android:paddingBottom="11dp"
+                android:text="생년월일"
+                android:textColor="@color/colorBorderEditText" />
 
             <EditText
                 android:id="@+id/editUserTaste"
@@ -156,26 +120,33 @@
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
-                android:textColorHint="@color/colorBorderEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserSex" />
+                android:textColorHint="@color/colorBorderEditText" />
 
+            <TextView
+                android:id="@+id/textUserSex"
+                android:layout_width="@dimen/edit_text_width"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_marginTop="@dimen/marginTop_basic"
+                android:background="@drawable/border_edittext"
+                android:fontFamily="@font/nanum_barun_gothic"
+                android:paddingStart="@dimen/padding_editText"
+                android:paddingTop="14dp"
+                android:paddingEnd="@dimen/padding_editText"
+                android:paddingBottom="11dp"
+                android:text="성별"
+                android:textColor="@color/colorBorderEditText" />
 
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="@dimen/btn_width_long"
                 android:layout_height="@dimen/btn_height"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/border_secondary_btn"
                 android:fontFamily="@font/nanum_barun_gothic_bold"
                 android:text="가입하기"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorButtonText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editUserTaste"
-                android:layout_marginBottom="20dp"/>
+                android:textColor="@color/colorButtonText"/>
 
 
         </LinearLayout>

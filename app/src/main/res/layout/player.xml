@@ -16,6 +16,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/btnClosePlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_down_arrow"
+        android:layout_margin="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
@@ -26,83 +36,87 @@
         app:layout_constraintTop_toBottomOf="@+id/albumArt" />
 
     <TextView
+        android:id="@+id/textNowPlaytime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
-        android:text="0:00"
         android:fontFamily="@font/nanum_barun_gothic"
+        android:text="0:00"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <TextView
+        android:id="@+id/textTotalMusicTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:text="4:00"
         android:fontFamily="@font/nanum_barun_gothic"
+        android:text="4:00"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
-    <TextView
-        android:id="@+id/textTitle"
+    <LinearLayout
+        android:id="@+id/layout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
-        android:text="노래 제목"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@android:color/white"
-        android:fontFamily="@font/nanum_barun_gothic_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="126dp"
-        android:background="@null"
-        android:src="@drawable/ic_star_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_barun_gothic_bold"
+            android:text="노래 제목"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btnLike"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_star_black_24dp"
+            android:layout_marginStart="8dp"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textAlbum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="앨범 이름"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/nanum_barun_gothic"
+        android:text="앨범 이름"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#CCCCCC"
+        android:textColor="@color/colorPlayerSingerAndAlbum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_title" />
 
     <TextView
         android:id="@+id/textSinger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="가수"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/nanum_barun_gothic"
+        android:text="가수"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#CCCCCC"
+        android:textColor="@color/colorPlayerSingerAndAlbum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textAlbum" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/layout_music_control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -153,7 +167,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/layout_music_etc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -161,9 +175,10 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/layout_music_control">
 
         <ImageButton
+            android:id="@+id/btnMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -178,13 +193,15 @@
             android:background="@null"
             android:src="@drawable/ic_volume_down_black_24dp" />
 
-        <ProgressBar
+        <SeekBar
             android:id="@+id/volumeBar"
             android:layout_width="152dp"
-            android:layout_height="2dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@android:color/white" />
+            android:background="@null"
+            android:progressTint="@color/colorSecondary"
+            android:thumbTint="@color/colorSecondary" />
 
         <ImageView
             android:id="@+id/volumeUp"
@@ -196,6 +213,7 @@
 
 
         <ImageButton
+            android:id="@+id/btnPlaylist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"

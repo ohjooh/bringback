@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".AlbumActivity">
-
-    <ImageView
-        android:id="@+id/album_photo"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="10dp"
-        android:src="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/album_date" />
 
     <TextView
         android:id="@+id/album_name"
@@ -31,68 +21,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/album_singer"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="@font/nanum_barun_gothic"
-        android:text="가수"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorExplanation"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/album_date"
-        app:layout_constraintTop_toBottomOf="@+id/album_name" />
 
-    <TextView
-        android:id="@+id/album_date"
+    <LinearLayout
+        android:id="@+id/layloutAlbumInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:fontFamily="@font/nanum_barun_gothic"
-        android:text="2000.00.00"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorExplanation"
-        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/album_name" />
+        app:layout_constraintTop_toBottomOf="@id/album_name">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textColor="@color/colorExplanation"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/album_date"
-        app:layout_constraintStart_toEndOf="@+id/album_singer"
-        app:layout_constraintTop_toBottomOf="@+id/album_name" />
+        <TextView
+            android:id="@+id/album_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:text="가수"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorExplanation" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textColor="@color/colorExplanation"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/album_genre"
-        app:layout_constraintStart_toEndOf="@+id/album_date"
-        app:layout_constraintTop_toBottomOf="@+id/album_name" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="|"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorExplanation" />
 
-    <TextView
-        android:id="@+id/album_genre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@font/nanum_barun_gothic"
-        android:text="장르"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorExplanation"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/album_date"
-        app:layout_constraintTop_toBottomOf="@+id/album_name" />
+        <TextView
+            android:id="@+id/album_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:text="2000.00.00"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorExplanation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="|"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorExplanation" />
+
+        <TextView
+            android:id="@+id/album_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:text="장르"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorExplanation" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/album_photo"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="10dp"
+        android:src="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layloutAlbumInfo" />
 
     <Button
         android:id="@+id/play_button"
@@ -141,6 +136,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/albumLine" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
