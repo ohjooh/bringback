@@ -3,8 +3,7 @@
     package="com.example.user.projectbringback">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ChangeTasteActivity" />
+        <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".AlbumActivity" />
         <activity android:name=".HomeSettingActivity" />
         <activity android:name=".RegisterActivity" />
@@ -26,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -37,20 +37,10 @@
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
-
-        <!--<service-->
-        <!--android:enabled="true"-->
-        <!--android:exported="true">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.media.browse.MediaBrowserService" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
     </application>
 
 </manifest>

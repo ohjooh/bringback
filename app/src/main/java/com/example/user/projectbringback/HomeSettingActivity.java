@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
@@ -33,11 +33,13 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.util.List;
 
-import static androidx.core.content.FileProvider.getUriForFile;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class HomeSettingActivity extends AppCompatActivity {
     private static final int GET_GALLERY_IMAGE = 1;
     private ImageView mProfile;
+    private TextView textEditPassword;
+    private TextView textEditTaste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class HomeSettingActivity extends AppCompatActivity {
         mProfile = findViewById(R.id.profile);
         ImageButton mBtnEditProfile = findViewById(R.id.btnEditProfile);
         Button mBtnFinish = findViewById(R.id.btnFinish);
+        textEditPassword = findViewById(R.id.textEditPassword);
+        textEditTaste = findViewById(R.id.textEditTaste);
         mProfile.setBackground(new ShapeDrawable(new OvalShape()));
         mProfile.setClipToOutline(true);
 
@@ -60,6 +64,22 @@ public class HomeSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        textEditPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent passwordIntent = new Intent(HomeSettingActivity.this, ChangePasswordActivity.class);
+                startActivity(passwordIntent);
+            }
+        });
+
+        textEditTaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tasteIntent = new Intent(HomeSettingActivity.this, ChangeTasteActivity.class);
+                startActivity(tasteIntent);
             }
         });
     }
@@ -104,7 +124,7 @@ public class HomeSettingActivity extends AppCompatActivity {
                 .setPermissionListener(permissionListener)
                 .setRationaleMessage("사진 업로드를 하기 위해서는 갤러리 접근 권한이 필요합니다.")
                 .setDeniedMessage("갤러리 접근 권한을 거부했습니다.\n[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissions(READ_EXTERNAL_STORAGE)
                 .check();
     }
 
