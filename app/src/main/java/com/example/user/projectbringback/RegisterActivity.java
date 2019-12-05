@@ -1,5 +1,6 @@
 package com.example.user.projectbringback;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,34 +21,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import static java.lang.String.format;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final int GET_USER_TASTE = 2;
+    private EditText editUserId;
+    private EditText editUserPW;
+    private EditText editUserPW2;
+    private EditText editUserEmail;
+    private EditText editUserPhoneNumber;
     private TextView textUserBirth;
     private TextView textUserSex;
+    private TextView textUserTaste;
     private Calendar time = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        textUserBirth = findViewById(R.id.textUserBirth);
-        textUserSex = findViewById(R.id.textUserSex);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        initViews();
 
         Button btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(loginIntent);
+                register();
             }
         });
 
@@ -63,11 +65,76 @@ public class RegisterActivity extends AppCompatActivity {
                 chooseSex();
             }
         });
+
+        textUserTaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseTaste();
+            }
+        });
+    }
+
+    public void initViews() {
+        editUserId = findViewById(R.id.editUserId);
+        editUserPW = findViewById(R.id.editUserPW);
+        editUserPW2 = findViewById(R.id.editUserPW2);
+        editUserEmail = findViewById(R.id.editUserEmail);
+        editUserPhoneNumber = findViewById(R.id.editUserPhoneNumber);
+        textUserBirth = findViewById(R.id.textUserBirth);
+        textUserSex = findViewById(R.id.textUserSex);
+        textUserTaste = findViewById(R.id.textUserTaste);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+    }
+
+    public void register() {
+        String id = editUserId.getText().toString().trim();
+        String pw = editUserPW.getText().toString().trim();
+        String pw2 = editUserPW2.getText().toString().trim();
+        String email = editUserEmail.getText().toString().trim();
+        String phoneNumber = editUserPhoneNumber.getText().toString().trim();
+        String birth = textUserBirth.getText().toString().trim();
+        String taste = textUserTaste.getText().toString().trim();
+        String sex = textUserSex.getText().toString().trim();
+
+        if (id.isEmpty()) {
+            Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            editUserId.requestFocus();
+        }else if(pw.isEmpty()){
+            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            editUserPW.requestFocus();
+        }else if(pw2.isEmpty()){
+            Toast.makeText(this, "비밀번호 확인을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            editUserPW2.requestFocus();
+        }else if(email.isEmpty()){
+            Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            editUserEmail.requestFocus();
+        }else if(phoneNumber.isEmpty()){
+            Toast.makeText(this, "핸드폰 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            editUserPhoneNumber.requestFocus();
+        }else if(birth.equals("생년월일") || birth.isEmpty()){
+            Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(taste.equals("음악 취향") || taste.isEmpty()){
+            Toast.makeText(this, "음악 취향을 선택해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(sex.equals("성별") || sex.isEmpty()){
+            Toast.makeText(this, "성별을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(!pw.equals(pw2)){
+            Toast.makeText(this, "비밀번호와 비밀번호 확인이 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "회원 가입 완료", Toast.LENGTH_SHORT).show();
+            Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loginIntent);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -82,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
         final NumberPicker yearPicker = dialog.findViewById(R.id.year);
         final NumberPicker monthPicker = dialog.findViewById(R.id.month);
         final NumberPicker dayPicker = dialog.findViewById(R.id.day);
-        int thisYear =time.get(Calendar.YEAR);
+        int thisYear = time.get(Calendar.YEAR);
 
         yearPicker.setMinValue(1900);
         yearPicker.setMaxValue(thisYear);
@@ -108,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 int year = yearPicker.getValue();
                 int month = monthPicker.getValue();
                 int day = dayPicker.getValue();
-                String birth = year+"년 "+month+"월 "+day+"일";
+                String birth = year + "년 " + month + "월 " + day + "일";
 
                 textUserBirth.setText(birth);
                 dialog.dismiss();
@@ -118,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void chooseSex(){
+    private void chooseSex() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_sex);
@@ -129,9 +196,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int btnId = group.getCheckedRadioButtonId();
-                if(btnId == -1){
+                if (btnId == -1) {
                     Toast.makeText(RegisterActivity.this, "성별을 선택해주세요.", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     RadioButton btnUserSex = dialog.findViewById(btnId);
                     String userSex = btnUserSex.getText().toString();
                     textUserSex.setText(userSex);
@@ -141,5 +208,24 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    private void chooseTaste() {
+        Intent intent = new Intent(RegisterActivity.this, ChangeTasteActivity.class);
+        startActivityForResult(intent, GET_USER_TASTE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_USER_TASTE && resultCode == RESULT_OK) {
+            textUserTaste.setText("");
+            assert data != null;
+            String[] selectedTaste = data.getStringArrayExtra("tastes");
+            for (String s : selectedTaste) {
+                if (s != null)
+                    textUserTaste.append(s + " ");
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class ChangeTasteActivity extends AppCompatActivity {
                 } else {
                     if (mSelectedItems.size() >= 2) {
                         Toast.makeText(ChangeTasteActivity.this, "최대 두 가지 취향만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         mSelectedItems.put(position, true);
                         holder.tasteName.setTextColor(getColor(R.color.colorPrimary));
                         holder.tasteName.setBackgroundColor(getColor(R.color.colorSecondary));
@@ -83,18 +84,22 @@ public class ChangeTasteActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.submit) {
-            if(mSelectedItems.size() == 0){
+            if (mSelectedItems.size() == 0) {
                 Toast.makeText(this, "좋아하는 음악 취향을 한 가지 이상 선택해주세요.", Toast.LENGTH_SHORT).show();
-            }else{
-                Log.d("SELECTED ITEM","selected item ? "+mSelectedItems);
-                for(int i=0;i<tasteList.size();i++){
-                    Log.d("mSelectedItems","index of key "+mSelectedItems.get(i));
-                    if(mSelectedItems.get(i)){
-                    String tasteName = tasteList.get(i);
-                    Log.d("tasteName", tasteName);
-                    //TODO 여기에서 i값의 tasteName를 User에 저장하기
+            } else {
+                Intent intent = new Intent();
+                int j=0;
+                String[] tasteName = new String[2];
+                Log.d("SELECTED ITEM", "selected item ? " + mSelectedItems);
+                for (int i = 0; i < tasteList.size(); i++) {
+                    Log.d("mSelectedItems", "index of key " + mSelectedItems.get(i));
+                    if (mSelectedItems.get(i)) {
+                        tasteName[j] = tasteList.get(i);
+                        intent.putExtra("tastes",tasteName);
+                        j++;
+                    }
                 }
-            }
+                setResult(RESULT_OK, intent);
                 finish();
             }
         }

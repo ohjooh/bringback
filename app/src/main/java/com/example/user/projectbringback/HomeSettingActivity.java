@@ -37,9 +37,11 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class HomeSettingActivity extends AppCompatActivity {
     private static final int GET_GALLERY_IMAGE = 1;
+    private static final int GET_USER_TASTE = 2;
     private ImageView mProfile;
-    private TextView textEditPassword;
-    private TextView textEditTaste;
+    private TextView mBtnEditPassword;
+    private TextView mBtnEditTaste;
+    private TextView mTextTastes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,9 @@ public class HomeSettingActivity extends AppCompatActivity {
         mProfile = findViewById(R.id.profile);
         ImageButton mBtnEditProfile = findViewById(R.id.btnEditProfile);
         Button mBtnFinish = findViewById(R.id.btnFinish);
-        textEditPassword = findViewById(R.id.textEditPassword);
-        textEditTaste = findViewById(R.id.textEditTaste);
+        mBtnEditPassword = findViewById(R.id.textEditPassword);
+        mBtnEditTaste = findViewById(R.id.textEditTaste);
+        mTextTastes = findViewById(R.id.tastes);
         mProfile.setBackground(new ShapeDrawable(new OvalShape()));
         mProfile.setClipToOutline(true);
 
@@ -67,7 +70,7 @@ public class HomeSettingActivity extends AppCompatActivity {
             }
         });
 
-        textEditPassword.setOnClickListener(new View.OnClickListener() {
+        mBtnEditPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent passwordIntent = new Intent(HomeSettingActivity.this, ChangePasswordActivity.class);
@@ -75,11 +78,11 @@ public class HomeSettingActivity extends AppCompatActivity {
             }
         });
 
-        textEditTaste.setOnClickListener(new View.OnClickListener() {
+        mBtnEditTaste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent tasteIntent = new Intent(HomeSettingActivity.this, ChangeTasteActivity.class);
-                startActivity(tasteIntent);
+                startActivityForResult(tasteIntent, GET_USER_TASTE);
             }
         });
     }
@@ -145,6 +148,17 @@ public class HomeSettingActivity extends AppCompatActivity {
                     cropImage(imageUri);
                 } else {
                     setResultCancelled();
+                }
+                break;
+            case GET_USER_TASTE:
+                if (resultCode == RESULT_OK) {
+                    mTextTastes.setText("");
+                    assert data != null;
+                    String[] selectedTaste = data.getStringArrayExtra("tastes");
+                    for (String s : selectedTaste) {
+                        if (s != null)
+                            mTextTastes.append("#" + s + " ");
+                    }
                 }
                 break;
             case UCrop.REQUEST_CROP:

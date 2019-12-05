@@ -37,6 +37,7 @@
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
                 android:hint="아이디"
+                android:inputType="text"
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
@@ -50,6 +51,7 @@
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
                 android:hint="비밀번호"
+                android:inputType="textPassword"
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
@@ -64,6 +66,7 @@
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
                 android:hint="비밀번호 확인"
+                android:inputType="textPassword"
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
@@ -77,6 +80,7 @@
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
                 android:hint="이메일"
+                android:inputType="textEmailAddress"
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
@@ -90,6 +94,7 @@
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
                 android:hint="핸드폰 번호"
+                android:inputType="phone"
                 android:padding="@dimen/padding_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
@@ -109,15 +114,18 @@
                 android:text="생년월일"
                 android:textColor="@color/colorBorderEditText" />
 
-            <EditText
-                android:id="@+id/editUserTaste"
+            <TextView
+                android:id="@+id/textUserTaste"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginTop="@dimen/marginTop_basic"
                 android:background="@drawable/border_edittext"
                 android:fontFamily="@font/nanum_barun_gothic"
-                android:hint="음악 취향"
-                android:padding="@dimen/padding_editText"
+                android:paddingStart="@dimen/padding_editText"
+                android:paddingTop="14dp"
+                android:paddingEnd="@dimen/padding_editText"
+                android:paddingBottom="11dp"
+                android:text="음악 취향"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorBorderEditText"
                 android:textColorHint="@color/colorBorderEditText" />
@@ -146,7 +154,7 @@
                 android:fontFamily="@font/nanum_barun_gothic_bold"
                 android:text="가입하기"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorButtonText"/>
+                android:textColor="@color/colorButtonText" />
 
 
         </LinearLayout>
