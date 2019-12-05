@@ -7,15 +7,55 @@
     android:background="@color/colorPrimary"
     tools:context=".ChangeTasteActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorSecondary"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="취향 변경"
+        app:titleMarginStart="60dp"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <TextView
+        android:id="@+id/textChooseTasteExplain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="취향 변경 액티비티"
+        android:layout_marginTop="@dimen/marginTop_basic"
+        android:fontFamily="@font/nanum_barun_gothic"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:scaleY="1.2"
+        android:text="좋아하는 음악 장르를\n선택해주세요."
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textScaleX="1.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/textChooseTasteExplain2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/nanum_barun_gothic"
+        android:text="최대 두가지 선택 가능합니다."
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorBorderLoginEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textChooseTasteExplain" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tastesView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_marginTop="@dimen/marginTop_with_Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textChooseTasteExplain2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
