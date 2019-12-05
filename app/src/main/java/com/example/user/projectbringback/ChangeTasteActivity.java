@@ -90,9 +90,11 @@ public class ChangeTasteActivity extends AppCompatActivity {
                 for(int i=0;i<tasteList.size();i++){
                     Log.d("mSelectedItems","index of key "+mSelectedItems.get(i));
                     if(mSelectedItems.get(i)){
-                        //TODO 여기에서 i값의 tasteName를 User에 저장하기
-                    }
+                    String tasteName = tasteList.get(i);
+                    Log.d("tasteName", tasteName);
+                    //TODO 여기에서 i값의 tasteName를 User에 저장하기
                 }
+            }
                 finish();
             }
         }

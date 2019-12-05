@@ -73,9 +73,9 @@ public class PlaylistInfoFragment extends Fragment{
             activity.getSupportActionBar().setHomeButtonEnabled(false);
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_settings_black);
-            RecyclerView musicList = view.findViewById(R.id.playlist);
+            final RecyclerView musicView = view.findViewById(R.id.playlist);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
-            musicList.setLayoutManager(linearLayoutManager);
+            musicView.setLayoutManager(linearLayoutManager);
 
             for (int i = 0; i < numberOfSong; i++)
                 musicLists.add(new Music("노래제목"+(i+1), "가수", "앨범명", "장르", "2019-09-23", i + 1));
@@ -83,8 +83,8 @@ public class PlaylistInfoFragment extends Fragment{
             final PlaylistInfoAdapter adapter = new PlaylistInfoAdapter(musicLists, activity);
             PlaylistItemTouchHelper mCallback = new PlaylistItemTouchHelper(adapter);
             mItemTouchHelper = new ItemTouchHelper(mCallback);
-            mItemTouchHelper.attachToRecyclerView(musicList);
-            musicList.setAdapter(adapter);
+            mItemTouchHelper.attachToRecyclerView(musicView);
+            musicView.setAdapter(adapter);
 
             mEditSearchMusic.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -99,7 +99,9 @@ public class PlaylistInfoFragment extends Fragment{
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-
+                    //TODO editText 입력 후 플레이리스트 띄우기
+                    String searchName = mEditSearchMusic.getText().toString();
+                    adapter.filter(searchName);
                 }
             });
         }
@@ -116,7 +118,8 @@ public class PlaylistInfoFragment extends Fragment{
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //playlist 편집하는 fragment 불러오기
+//                loadFragment(new PlaylistInfoEditFragment());
+                //TODO playlist edit 화면 가져오기 (Activity)
                 return true;
             case R.id.insert_photo:
                 showImageSelectDialog();
