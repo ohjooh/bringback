@@ -15,4 +15,5 @@
     <color name="colorExplanation">#C7C7C7</color>
     <color name="colorPlayerSingerAndAlbum">#CCCCCC</color>
     <color name="colorDialogEditBackground">#2F2F2F</color>
+    <color name="colorOpaque">#22FFFFFF</color>
 </resources>
