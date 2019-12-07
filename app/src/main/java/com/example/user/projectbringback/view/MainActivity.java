@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     boolean IS_LIKE = false;
     boolean IS_SHUFFLE = false;
     int IS_REPEAT = 0;
+    private String userId;
+    private String userTaste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout bottomSheet = findViewById(R.id.bottomsheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomPlayerBar = findViewById(R.id.playerBar);
+        userId = getIntent().getStringExtra("Id");
+        userTaste = getIntent().getStringExtra("Taste");
 
         initBottomSheet();
 
@@ -229,6 +233,11 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
+
+        Bundle args = new Bundle();
+        args.putString("Id", userId);
+        args.putString("Taste", userTaste);
+        fragment.setArguments(args);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

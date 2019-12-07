@@ -45,6 +45,12 @@ public class HomeFragment extends Fragment {
         mProfile.setBackground(new ShapeDrawable(new OvalShape()));
         mProfile.setClipToOutline(true);
 
+        String userId = getArguments().getString("Id");
+        String userTaste = getArguments().getString("Taste");
+
+        mNickName.setText(userId);
+        mTastes.setText(userTaste);
+
         final RecyclerView albums = view.findViewById(R.id.albums);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         albums.setLayoutManager(gridLayoutManager);

@@ -19,18 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.projectbringback.R;
-import com.example.user.projectbringback.RetrofitInterface;
-
 import java.util.Calendar;
 import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import static java.lang.String.format;
+import static com.example.user.projectbringback.Network.onNetwork;
+import static com.example.user.projectbringback.Network.retrofitInterface;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final int GET_USER_TASTE = 2;
@@ -43,23 +40,12 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textUserSex;
     private TextView textUserTaste;
     private Calendar time = Calendar.getInstance();
-    private Retrofit retrofit;
-    private RetrofitInterface retrofitInterface;
-//    private String BASE_URL = "http://10.0.2.2:3000"; //에뮬레이터 주소
-    private String BASE_URL = "http://fc0fff68.ngrok.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory((GsonConverterFactory.create()))
-                .build();
-
-        retrofitInterface = retrofit.create(RetrofitInterface.class);
 
 
         Button btnRegister = findViewById(R.id.btnRegister);
@@ -144,8 +130,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else{
 
-            Toast.makeText(RegisterActivity.this, taste, Toast.LENGTH_SHORT).show();
-
             HashMap<String, String> map = new HashMap<>();
             map.put("userId", id);
             map.put("password", pw);
@@ -155,7 +139,10 @@ public class RegisterActivity extends AppCompatActivity {
             map.put("gender", sex);
             map.put("taste", taste);
 
+
+            onNetwork();
             Call<Void> call = retrofitInterface.ExsiguUp(map);
+
 
             call.enqueue(new Callback<Void>() {
                 @Override
