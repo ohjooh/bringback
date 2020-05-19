@@ -4,7 +4,6 @@ package com.example.user.projectbringback.view;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -54,8 +53,6 @@ import static android.app.Activity.RESULT_OK;
 public class PlaylistInfoFragment extends Fragment{
     private List<Music> musicLists = new ArrayList<>();
     private static final int GET_GALLERY_IMAGE = 1;
-    private ItemTouchHelper mItemTouchHelper;
-    private EditText mEditSearchMusic;
     private String mPlaylistName;
     private int mNumberOfSong;
 
@@ -67,7 +64,7 @@ public class PlaylistInfoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_playlist_info, container, false);
-        mEditSearchMusic = view.findViewById(R.id.editSearchMusic);
+        EditText mEditSearchMusic = view.findViewById(R.id.editSearchMusic);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null && getArguments() != null) {
@@ -87,7 +84,7 @@ public class PlaylistInfoFragment extends Fragment{
 
             final PlaylistInfoAdapter adapter = new PlaylistInfoAdapter(musicLists, activity);
             PlaylistItemTouchHelper mCallback = new PlaylistItemTouchHelper(adapter);
-            mItemTouchHelper = new ItemTouchHelper(mCallback);
+            ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mCallback);
             mItemTouchHelper.attachToRecyclerView(musicView);
             musicView.setAdapter(adapter);
 
@@ -104,7 +101,6 @@ public class PlaylistInfoFragment extends Fragment{
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    //TODO editText 입력 후 플레이리스트 띄우기
                     String searchName = editable.toString();
                     adapter.filter(searchName);
                 }
@@ -127,7 +123,6 @@ public class PlaylistInfoFragment extends Fragment{
                 modifyPlaylistIntent.putExtra("name", mPlaylistName);
                 modifyPlaylistIntent.putExtra("numberOfSong",mNumberOfSong);
                 startActivity(modifyPlaylistIntent);
-                //TODO playlist edit 화면 가져오기 (Activity)
                 return true;
             case R.id.insert_photo:
                 showImageSelectDialog();
@@ -141,7 +136,7 @@ public class PlaylistInfoFragment extends Fragment{
 
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack();
+        Objects.requireNonNull(fragmentManager).popBackStack();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -152,19 +147,15 @@ public class PlaylistInfoFragment extends Fragment{
         final CharSequence[] addItems = {"갤러리에서 사진 가져오기", "기본 이미지로 설정하기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogTheme);
         builder.setTitle("플레이리스트 앨범커버 설정")
-                .setItems(addItems, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case 0:
-                                showPermissionDialog();
-                                dialogInterface.dismiss();
-                                break;
-                            case 1:
-//                        mProfile.setImageResource(android.R.color.white);
-                                dialogInterface.dismiss();
-                                break;
-                        }
+                .setItems(addItems, (dialogInterface, i) -> {
+                    switch (i) {
+                        case 0:
+                            showPermissionDialog();
+                            dialogInterface.dismiss();
+                            break;
+                        case 1:
+                            dialogInterface.dismiss();
+                            break;
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -184,7 +175,7 @@ public class PlaylistInfoFragment extends Fragment{
             }
         };
 
-        TedPermission.with(getActivity())
+        TedPermission.with(Objects.requireNonNull(getActivity()))
                 .setPermissionListener(permissionListener)
                 .setRationaleMessage("사진 업로드를 하기 위해서는 갤러리 접근 권한이 필요합니다.")
                 .setDeniedMessage("갤러리 접근 권한을 거부했습니다.\n[설정] > [권한] 에서 권한을 허용할 수 있습니다.")

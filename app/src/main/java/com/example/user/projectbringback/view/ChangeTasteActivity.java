@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -46,30 +44,27 @@ public class ChangeTasteActivity extends AppCompatActivity {
 
         final Animation aniZoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 
-        adapter.setOnItemClickListener(new TasteAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(TasteAdapter.TasteViewHolder holder, View view, int position) {
-                if (mSelectedItems.get(position, false)) {
-                    mSelectedItems.delete(position);
-                    holder.tasteName.setTextColor(Color.WHITE);
-                    holder.tasteName.setBackgroundColor(Color.BLACK);
+        adapter.setOnItemClickListener((holder, view, position) -> {
+            if (mSelectedItems.get(position, false)) {
+                mSelectedItems.delete(position);
+                holder.tasteName.setTextColor(Color.WHITE);
+                holder.tasteName.setBackgroundColor(Color.BLACK);
+                int textHeight = holder.tasteName.getHeight();
+                int textWidth = holder.tasteName.getWidth();
+                holder.tasteName.setHeight(textHeight - 50);
+                holder.tasteName.setWidth(textWidth - 50);
+            } else {
+                if (mSelectedItems.size() >= 2) {
+                    Toast.makeText(ChangeTasteActivity.this, "최대 두 가지 취향만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mSelectedItems.put(position, true);
+                    holder.tasteName.setTextColor(getColor(R.color.colorPrimary));
+                    holder.tasteName.setBackgroundColor(getColor(R.color.colorSecondary));
                     int textHeight = holder.tasteName.getHeight();
                     int textWidth = holder.tasteName.getWidth();
-                    holder.tasteName.setHeight(textHeight - 50);
-                    holder.tasteName.setWidth(textWidth - 50);
-                } else {
-                    if (mSelectedItems.size() >= 2) {
-                        Toast.makeText(ChangeTasteActivity.this, "최대 두 가지 취향만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mSelectedItems.put(position, true);
-                        holder.tasteName.setTextColor(getColor(R.color.colorPrimary));
-                        holder.tasteName.setBackgroundColor(getColor(R.color.colorSecondary));
-                        int textHeight = holder.tasteName.getHeight();
-                        int textWidth = holder.tasteName.getWidth();
-                        holder.tasteName.setHeight(textHeight + 50);
-                        holder.tasteName.setWidth(textWidth + 50);
-                        holder.tasteName.startAnimation(aniZoomIn);
-                    }
+                    holder.tasteName.setHeight(textHeight + 50);
+                    holder.tasteName.setWidth(textWidth + 50);
+                    holder.tasteName.startAnimation(aniZoomIn);
                 }
             }
         });
@@ -93,9 +88,7 @@ public class ChangeTasteActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 int j=0;
                 String[] tasteName = new String[2];
-                Log.d("SELECTED ITEM", "selected item ? " + mSelectedItems);
                 for (int i = 0; i < tasteList.size(); i++) {
-                    Log.d("mSelectedItems", "index of key " + mSelectedItems.get(i));
                     if (mSelectedItems.get(i)) {
                         tasteName[j] = tasteList.get(i);
                         intent.putExtra("tastes",tasteName);

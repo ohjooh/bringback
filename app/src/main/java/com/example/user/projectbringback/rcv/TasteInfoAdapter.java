@@ -10,23 +10,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.user.projectbringback.R;
 import com.example.user.projectbringback.data.Music;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TasteInfoAdapter extends RecyclerView.Adapter<TasteInfoAdapter.TasteInfoViewHolder> {
     private Context context;
     private List<Music> albums;
     private OnItemClickListener listener;
+    private List<Music> filterList = new ArrayList<>();
 
     public interface OnItemClickListener{
-        public void onItemClick(TasteInfoViewHolder holder, View view, int position);
+        void onItemClick(TasteInfoViewHolder holder, View view, int position);
     }
 
     public TasteInfoAdapter(Context context, List<Music> albums) {
         this.context = context;
         this.albums = albums;
+        filterList.addAll(albums);
     }
 
     public class TasteInfoViewHolder extends RecyclerView.ViewHolder {
@@ -35,23 +41,36 @@ public class TasteInfoAdapter extends RecyclerView.Adapter<TasteInfoAdapter.Tast
         TextView albumSinger;
         OnItemClickListener listener;
 
-//imageAlbumCover textAlbumName textSinger
-        public TasteInfoViewHolder(@NonNull View itemView) {
+        TasteInfoViewHolder(@NonNull View itemView) {
             super(itemView);
             albumCover = itemView.findViewById(R.id.imageAlbumCover);
             albumName = itemView.findViewById(R.id.textAlbumName);
             albumSinger = itemView.findViewById(R.id.textSinger);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if(listener != null)
-                        listener.onItemClick(TasteInfoViewHolder.this, v, position);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if(listener != null)
+                    listener.onItemClick(TasteInfoViewHolder.this, v, position);
             });
         }
 
         public void setOnItemClickListener(OnItemClickListener listener){this.listener = listener;}
+    }
+
+    public void filter(String input){
+        input = input.toLowerCase(Locale.getDefault());
+        albums.clear();
+
+        if(input.length() == 0){
+            albums.clear();
+        }else{
+            for(Music music : filterList){
+                String genre = music.getGenre();
+                if(genre.toLowerCase().contains(input)){
+                    albums.add(music);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -64,7 +83,12 @@ public class TasteInfoAdapter extends RecyclerView.Adapter<TasteInfoAdapter.Tast
 
     @Override
     public void onBindViewHolder(@NonNull TasteInfoAdapter.TasteInfoViewHolder holder, int position) {
-//        holder.albumCover.setImageDrawable();
+        Glide.with(context)
+                .asDrawable()
+                .load(albums.get(position).bitmapResource)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(holder.albumCover);
         holder.albumName.setText(albums.get(position).getAlbum());
         holder.albumSinger.setText(albums.get(position).getSinger());
         holder.setOnItemClickListener(listener);

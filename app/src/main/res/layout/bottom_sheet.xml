@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottomsheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:behavior_peekHeight="?actionBarSize"
-    app:layout_behavior="@string/bottom_sheet_behavior"
+    android:orientation="vertical"
     app:behavior_hideable="false"
-    android:orientation="vertical">
+    app:behavior_peekHeight="?actionBarSize"
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/playerBar"
@@ -28,7 +29,8 @@
             android:src="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/playerBarTitle"
@@ -36,8 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="6dp"
-            android:text="노래 제목"
             android:fontFamily="@font/nanum_barun_gothic"
+            android:text="노래 제목"
+            android:maxLength="10"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/playerBarAlbumArt"
@@ -48,10 +51,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:text="가수"
             android:fontFamily="@font/nanum_barun_gothic"
+            android:maxLength="10"
+            android:text="가수"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorPlayerSingerAndAlbum"
+            android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/playerBarAlbumArt"
             app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
 
@@ -60,10 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="-"
             android:fontFamily="@font/nanum_barun_gothic"
+            android:text="-"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorPlayerSingerAndAlbum"
+            android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/playerBarSinger"
             app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
 
@@ -72,10 +76,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="앨범"
             android:fontFamily="@font/nanum_barun_gothic"
+            android:maxLength="10"
+            android:text="앨범"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorPlayerSingerAndAlbum"
+            android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/playerBarSlash"
             app:layout_constraintTop_toBottomOf="@+id/playerBarTitle" />
 
@@ -83,37 +88,53 @@
             android:id="@+id/playerBarBtnPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/marginTop_basic"
+            android:layout_marginEnd="20dp"
             android:background="@null"
             android:src="@drawable/ic_fast_rewind_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/playerBarBtnPlay"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/playerBarBtnPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/marginTop_basic"
+            android:layout_marginEnd="20dp"
             android:background="@null"
-            android:src="@drawable/ic_pause_black_24dp"
+            android:src="@drawable/ic_play_arrow_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/playerBarBtnNext"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/playerBarBtnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/marginTop_basic"
+            android:layout_marginEnd="20dp"
             android:background="@null"
             android:src="@drawable/ic_fast_forward_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/player"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <com.google.android.exoplayer2.ui.PlayerControlView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            app:controller_layout_id="@layout/custom_playback_control"
+            app:layout_constraintTop_toBottomOf="@id/albumArt"
+            app:repeat_toggle_modes="one|all"
+            app:show_shuffle_button="true"
+            app:use_controller="true" />
+    </FrameLayout>
 
 </LinearLayout>

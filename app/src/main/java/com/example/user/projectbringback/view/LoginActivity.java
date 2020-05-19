@@ -13,6 +13,8 @@ import com.example.user.projectbringback.LoginResult;
 import com.example.user.projectbringback.R;
 import com.example.user.projectbringback.helper.BackKeyHandler;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -32,12 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         backKeyHandler = new BackKeyHandler(this);
         Button btnLogin = findViewById(R.id.btnLogin);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
+        btnLogin.setOnClickListener(view -> login());
     }
 
     public void login(){
@@ -52,15 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         if (id.isEmpty()) {
             Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
             userId.requestFocus();
-        }
-
-        else if(password.isEmpty()) {
-            Toast.makeText(this, " 비밀번를 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(password.isEmpty()) {
+            Toast.makeText(this, " 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             userPassword.requestFocus();
-
-        }
-
-        else {
+        }else {
             HashMap<String, String> map = new HashMap<>();
             map.put("userId", id);
             map.put("password", password);
@@ -71,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
             call.enqueue(new Callback<LoginResult>() {
                 @Override
-                public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+                public void onResponse(@NotNull Call<LoginResult> call, @NotNull Response<LoginResult> response) {
                     LoginResult result = response.body();
 
                     if (response.code() == 200){
@@ -93,19 +85,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<LoginResult> call, Throwable t) {
+                public void onFailure(@NotNull Call<LoginResult> call, @NotNull Throwable t) {
                     Toast.makeText(LoginActivity.this, t.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
             });
-
-
-
-
-
         }
-
-
     }
 
     @Override

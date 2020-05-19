@@ -25,6 +25,7 @@ import com.example.user.projectbringback.rcv.PlaylistAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class PlaylistFragment extends Fragment {
@@ -50,22 +51,16 @@ public class PlaylistFragment extends Fragment {
         final PlaylistAdapter playlistAdapter = new PlaylistAdapter(playlists, getActivity());
         playlist.setAdapter(playlistAdapter);
 
-        playlistAdapter.setOnItemClickListener(new PlaylistAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(PlaylistAdapter.PlaylistViewHolder holder, View view, int position) {
-                Playlist item = playlists.get(position);
-                loadFragment(item);
-            }
+        playlistAdapter.setOnItemClickListener((holder, view1, position) -> {
+            Playlist item = playlists.get(position);
+            loadFragment(item);
         });
 
         ImageButton mBtnAddPlaylist = view.findViewById(R.id.btnAddPlaylist);
 
-        mBtnAddPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddPlaylistDialog();
-                playlistAdapter.notifyDataSetChanged();
-            }
+        mBtnAddPlaylist.setOnClickListener(view12 -> {
+            AddPlaylistDialog();
+            playlistAdapter.notifyDataSetChanged();
         });
 
         return view;
@@ -75,7 +70,7 @@ public class PlaylistFragment extends Fragment {
         String playlistName = item.getName();
         int numberOfSong = item.getNumberOfSong();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack();
+        Objects.requireNonNull(fragmentManager).popBackStack();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, newInstance(playlistName, numberOfSong));
@@ -93,33 +88,25 @@ public class PlaylistFragment extends Fragment {
 
 
     private void AddPlaylistDialog() {
-        final Dialog addPlaylistDialog = new Dialog(getContext());
+        final Dialog addPlaylistDialog = new Dialog(Objects.requireNonNull(getContext()));
         addPlaylistDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         addPlaylistDialog.setContentView(R.layout.dialog_add_playlist);
         final EditText editPlaylistName = addPlaylistDialog.findViewById(R.id.editPlaylistName);
         Button btnAddPlaylist = addPlaylistDialog.findViewById(R.id.btnAddPlaylist);
         Button btnCancel = addPlaylistDialog.findViewById(R.id.btnCancel);
 
-         btnAddPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = editPlaylistName.getText().toString().trim();
-                if(name.isEmpty()){
-                    Toast.makeText(getContext(), "플레이리스트명을 입력하세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                    playlists.add(new Playlist(name, 0, null));
-                    Log.d("new Playlist Info:", playlists.size()+"번째 플레이리스트명? "+playlists.get(playlists.size()-1).getName());
-                    addPlaylistDialog.dismiss();
-                }
-            }
-        });
-
-         btnCancel.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 addPlaylistDialog.cancel();
+         btnAddPlaylist.setOnClickListener(view -> {
+             String name = editPlaylistName.getText().toString().trim();
+             if(name.isEmpty()){
+                 Toast.makeText(getContext(), "플레이리스트명을 입력하세요.", Toast.LENGTH_SHORT).show();
+             }else{
+                 playlists.add(new Playlist(name, 0, null));
+                 Log.d("new Playlist Info:", playlists.size()+"번째 플레이리스트명? "+playlists.get(playlists.size()-1).getName());
+                 addPlaylistDialog.dismiss();
              }
          });
+
+         btnCancel.setOnClickListener(view -> addPlaylistDialog.cancel());
 
          addPlaylistDialog.show();
     }

@@ -1,7 +1,6 @@
 package com.example.user.projectbringback.rcv;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.user.projectbringback.R;
 import com.example.user.projectbringback.data.Music;
 
@@ -22,7 +23,7 @@ public class AlbumStorageAdapter extends RecyclerView.Adapter<AlbumStorageAdapte
     private OnItemClickListener listener;
 
     public interface OnItemClickListener{
-        public void onItemClick(AlbumStorageViewHolder holder, View view, int position);
+        void onItemClick(AlbumStorageViewHolder holder, View view, int position);
     }
 
     public AlbumStorageAdapter(Context context, List<Music> albums) {
@@ -31,24 +32,21 @@ public class AlbumStorageAdapter extends RecyclerView.Adapter<AlbumStorageAdapte
     }
 
     public class AlbumStorageViewHolder extends RecyclerView.ViewHolder {
-        public ImageView albumCover;
-        public TextView albumName;
+        ImageView albumCover;
+        TextView albumName;
         public TextView singer;
         OnItemClickListener listener;
 
-        public AlbumStorageViewHolder(@NonNull View itemView) {
+        AlbumStorageViewHolder(@NonNull View itemView) {
             super(itemView);
             albumCover = itemView.findViewById(R.id.imageAlbumCover);
             albumName = itemView.findViewById(R.id.textAlbumName);
             singer = itemView.findViewById(R.id.textSinger);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if(listener!=null)
-                        listener.onItemClick(AlbumStorageViewHolder.this, view, position);
-                }
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if(listener!=null)
+                    listener.onItemClick(AlbumStorageViewHolder.this, view, position);
             });
         }
 
@@ -67,8 +65,12 @@ public class AlbumStorageAdapter extends RecyclerView.Adapter<AlbumStorageAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AlbumStorageAdapter.AlbumStorageViewHolder holder, int position) {
-        holder.albumCover.setImageDrawable(null);
-        holder.albumCover.setBackgroundColor(Color.WHITE);
+        Glide.with(context)
+                .asDrawable()
+                .load(albums.get(position).bitmapResource)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(holder.albumCover);
         holder.albumName.setText(albums.get(position).getAlbum());
         holder.singer.setText(albums.get(position).getSinger());
         holder.setOnItemClickListener(listener);

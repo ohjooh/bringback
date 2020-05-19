@@ -52,61 +52,52 @@ public class ModifyPlaylistInfoActivity extends AppCompatActivity {
         adapter = new PlaylistEditAdapter(this, musicList);
         playlistView.setAdapter(adapter);
 
-        textSelectedOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSelectedItems.size() <= 0 || mSelectedItems.size() < musicList.size()) {
-                    textSelectedOptions.setText("선택 해제");
-                    for (int i = 0; i < musicList.size(); i++) {
-                        mSelectedItems.put(i, true);
-                    }
-                    btnDelete.setVisibility(View.VISIBLE);
-                    showDeleteButton(btnDelete);
-                } else {
-                    textSelectedOptions.setText("전체 선택");
-                    mSelectedItems.clear();
-                    hideDeleteButton(btnDelete);
+        textSelectedOptions.setOnClickListener(v -> {
+            if (mSelectedItems.size() <= 0 || mSelectedItems.size() < musicList.size()) {
+                textSelectedOptions.setText("선택 해제");
+                for (int i = 0; i < musicList.size(); i++) {
+                    mSelectedItems.put(i, true);
                 }
-            }
-        });
-
-        adapter.setOnItemClickListener(new PlaylistEditAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(PlaylistEditAdapter.PlaylistEditViewHolder holder, View view, int position) {
-                if (mSelectedItems.get(position, false)) {
-                    mSelectedItems.delete(position);
-                    view.setBackgroundColor(Color.TRANSPARENT);
-                } else {
-                    mSelectedItems.put(position, true);
-                    view.setBackgroundColor(getColor(R.color.colorOpaque));
-                }
-
-                if (mSelectedItems.size() <= 0) {
-                    hideDeleteButton(btnDelete);
-                } else {
-                    btnDelete.setVisibility(View.VISIBLE);
-                    showDeleteButton(btnDelete);
-                }
-            }
-        });
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selectedOption = textSelectedOptions.getText().toString();
-                if (selectedOption.equals("선택 해제")) {
-                    musicList.clear();
-                    textSelectedOptions.setText("전체 선택");
-                } else {
-                    for (int i = 0; i < musicList.size(); i++) {
-                        if (mSelectedItems.get(i)) {
-                            deleteMusicList(i);
-                        }
-                    }
-                }
-                adapter.notifyDataSetChanged();
+                btnDelete.setVisibility(View.VISIBLE);
+                showDeleteButton(btnDelete);
+            } else {
+                textSelectedOptions.setText("전체 선택");
+                mSelectedItems.clear();
                 hideDeleteButton(btnDelete);
             }
+        });
+
+        adapter.setOnItemClickListener((holder, view, position) -> {
+            if (mSelectedItems.get(position, false)) {
+                mSelectedItems.delete(position);
+                view.setBackgroundColor(Color.TRANSPARENT);
+            } else {
+                mSelectedItems.put(position, true);
+                view.setBackgroundColor(getColor(R.color.colorOpaque));
+            }
+
+            if (mSelectedItems.size() <= 0) {
+                hideDeleteButton(btnDelete);
+            } else {
+                btnDelete.setVisibility(View.VISIBLE);
+                showDeleteButton(btnDelete);
+            }
+        });
+
+        btnDelete.setOnClickListener(v -> {
+            String selectedOption = textSelectedOptions.getText().toString();
+            if (selectedOption.equals("선택 해제")) {
+                musicList.clear();
+                textSelectedOptions.setText("전체 선택");
+            } else {
+                for (int i = musicList.size()-1; i >= 0; i--) {
+                    if (mSelectedItems.get(i)) {
+                        deleteMusicList(i);
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+            hideDeleteButton(btnDelete);
         });
     }
 

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +19,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private EditText mCurrentPassword;
     private EditText mNewPassword;
     private EditText mNewPassword2;
-    private Button mBtnSubmit;
     private TextView mIsEqualNewPW;
 
     @Override
@@ -31,7 +29,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         mCurrentPassword = findViewById(R.id.editCurrentPW);
         mNewPassword = findViewById(R.id.editNewPW);
         mNewPassword2 = findViewById(R.id.editNewPW2);
-        mBtnSubmit = findViewById(R.id.btnSubmit);
+        Button mBtnSubmit = findViewById(R.id.btnSubmit);
         mIsEqualNewPW = findViewById(R.id.textIsEqualNewPW);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -63,27 +61,24 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO DB에 입력돼있는 비밀번호와 동일 여부 판별하는 조건문 작성
+        mBtnSubmit.setOnClickListener(v -> {
 
-                String currentPW = mCurrentPassword.getText().toString().trim();
-                String newPW = mNewPassword.getText().toString().trim();
-                String newPW2 = mNewPassword2.getText().toString().trim();
-                if(currentPW.isEmpty() || newPW.isEmpty() || newPW2.isEmpty()){
-                    Toast.makeText(ChangePasswordActivity.this, "빈칸을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                    if(currentPW.equals(newPW) && newPW.equals(newPW2)){
-                        Toast.makeText(ChangePasswordActivity.this, "현재 비밀번호와 새 비밀번호가 동일합니다.", Toast.LENGTH_SHORT).show();
-                        mNewPassword.requestFocus();
-                    }else if(!newPW.equals(newPW2)){
-                        Toast.makeText(ChangePasswordActivity.this, "새로운 비밀번호와 2차 비밀번호 확인이 동일하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(ChangePasswordActivity.this, "비밀번호가 정상적으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+
+            String currentPW = mCurrentPassword.getText().toString().trim();
+            String newPW = mNewPassword.getText().toString().trim();
+            String newPW2 = mNewPassword2.getText().toString().trim();
+            if(currentPW.isEmpty() || newPW.isEmpty() || newPW2.isEmpty()){
+                Toast.makeText(ChangePasswordActivity.this, "빈칸을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }else{
+                if(currentPW.equals(newPW) && newPW.equals(newPW2)){
+                    Toast.makeText(ChangePasswordActivity.this, "현재 비밀번호와 새 비밀번호가 동일합니다.", Toast.LENGTH_SHORT).show();
+                    mNewPassword.requestFocus();
+                }else if(!newPW.equals(newPW2)){
+                    Toast.makeText(ChangePasswordActivity.this, "새로운 비밀번호와 2차 비밀번호 확인이 동일하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ChangePasswordActivity.this, "비밀번호가 정상적으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

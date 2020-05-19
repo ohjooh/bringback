@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.projectbringback.R;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -47,35 +50,14 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initViews();
 
-
         Button btnRegister = findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
+        btnRegister.setOnClickListener(view -> register());
 
-        textUserBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseDate();
-            }
-        });
+        textUserBirth.setOnClickListener(view -> chooseDate());
 
-        textUserSex.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseSex();
-            }
-        });
+        textUserSex.setOnClickListener(view -> chooseSex());
 
-        textUserTaste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseTaste();
-            }
-        });
+        textUserTaste.setOnClickListener(view -> chooseTaste());
     }
 
     public void initViews() {
@@ -141,12 +123,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 
             onNetwork();
-            Call<Void> call = retrofitInterface.ExsiguUp(map);
+            Call<Void> call = retrofitInterface.ExsignUp(map);
 
 
             call.enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
+                public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                     if(response.code() == 200){
                         Toast.makeText(RegisterActivity.this, "회원 가입 완료", Toast.LENGTH_SHORT).show();
                         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -161,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
                     Toast.makeText(RegisterActivity.this, "네트워크 연결 오류",
                             Toast.LENGTH_LONG).show();
 
@@ -208,17 +190,14 @@ public class RegisterActivity extends AppCompatActivity {
         dayPicker.setWrapSelectorWheel(true);
         dayPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int year = yearPicker.getValue();
-                int month = monthPicker.getValue();
-                int day = dayPicker.getValue();
-                String birth = year + "년 " + month + "월 " + day + "일";
+        btnSubmit.setOnClickListener(view -> {
+            int year = yearPicker.getValue();
+            int month = monthPicker.getValue();
+            int day = dayPicker.getValue();
+            String birth = year + "년 " + month + "월 " + day + "일";
 
-                textUserBirth.setText(birth);
-                dialog.dismiss();
-            }
+            textUserBirth.setText(birth);
+            dialog.dismiss();
         });
 
         dialog.show();
@@ -231,18 +210,15 @@ public class RegisterActivity extends AppCompatActivity {
         Button btnSubmit = dialog.findViewById(R.id.btnSubmit);
         final RadioGroup group = dialog.findViewById(R.id.radioGroupSex);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int btnId = group.getCheckedRadioButtonId();
-                if (btnId == -1) {
-                    Toast.makeText(RegisterActivity.this, "성별을 선택해주세요.", Toast.LENGTH_LONG).show();
-                } else {
-                    RadioButton btnUserSex = dialog.findViewById(btnId);
-                    String userSex = btnUserSex.getText().toString();
-                    textUserSex.setText(userSex);
-                    dialog.dismiss();
-                }
+        btnSubmit.setOnClickListener(view -> {
+            int btnId = group.getCheckedRadioButtonId();
+            if (btnId == -1) {
+                Toast.makeText(RegisterActivity.this, "성별을 선택해주세요.", Toast.LENGTH_LONG).show();
+            } else {
+                RadioButton btnUserSex = dialog.findViewById(btnId);
+                String userSex = btnUserSex.getText().toString();
+                textUserSex.setText(userSex);
+                dialog.dismiss();
             }
         });
 

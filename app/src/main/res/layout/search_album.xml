@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/albumImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@color/colorSecondary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/albumName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/albumImage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="앨범명"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/albumArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/albumImage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="가수"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/albumName"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/albumDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/albumImage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="날짜"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/albumArtist"
+        android:layout_marginStart="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ShapeDrawable;
@@ -17,29 +16,37 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.user.projectbringback.R;
+import com.example.user.projectbringback.data.Set_data;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.yalantis.ucrop.UCrop;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static com.example.user.projectbringback.Network.onNetwork;
+import static com.example.user.projectbringback.Network.retrofitInterface;
 
 public class HomeSettingActivity extends AppCompatActivity {
     private static final int GET_GALLERY_IMAGE = 1;
     private static final int GET_USER_TASTE = 2;
     private ImageView mProfile;
-    private TextView mBtnEditPassword;
-    private TextView mBtnEditTaste;
     private TextView mTextTastes;
 
     @Override
@@ -49,59 +56,80 @@ public class HomeSettingActivity extends AppCompatActivity {
         mProfile = findViewById(R.id.profile);
         ImageButton mBtnEditProfile = findViewById(R.id.btnEditProfile);
         Button mBtnFinish = findViewById(R.id.btnFinish);
-        mBtnEditPassword = findViewById(R.id.textEditPassword);
-        mBtnEditTaste = findViewById(R.id.textEditTaste);
+        TextView mBtnEditPassword = findViewById(R.id.textEditPassword);
+        TextView mBtnEditTaste = findViewById(R.id.textEditTaste);
         mTextTastes = findViewById(R.id.tastes);
         mProfile.setBackground(new ShapeDrawable(new OvalShape()));
         mProfile.setClipToOutline(true);
 
-        mBtnEditProfile.setOnClickListener(new View.OnClickListener() {
+        String userId = getIntent().getStringExtra("Id");
+        onNetwork();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+
+        Call<Set_data> call =retrofitInterface.ExUserData(map);
+
+        call.enqueue(new Callback<Set_data>() {
             @Override
-            public void onClick(View view) {
-                showImageSelectDialog();
+            public void onResponse(@NotNull Call<Set_data> call, @NotNull Response<Set_data> response) {
+                Set_data result = response.body();
+                if(response.code() == 200){
+                    String get_email = result.getEmail_r();
+                    String get_phone = result.getPhone_r();
+                    String get_birth = result.getBirth_r();
+                    String get_gender = result.getGender_r();
+                    String get_taste = result.getTaste_r();
+
+                    EditText sId = findViewById(R.id.editNickname);
+                    sId.setText(userId);
+                    EditText sEmail = findViewById(R.id.editUserEmail);
+                    sEmail.setText(get_email);
+                    EditText sphone = findViewById(R.id.editUserPhoneNumber);
+                    sphone.setText(get_phone);
+                    EditText sbirth = findViewById(R.id.editUserBirth);
+                    sbirth.setText(get_birth);
+                    TextView sgender = findViewById(R.id.textUserSexResult);
+                    sgender.setText(get_gender);
+                    TextView staste = findViewById(R.id.tastes);
+                    staste.setText(get_taste);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Set_data> call, @NotNull Throwable t) {
+
             }
         });
 
-        mBtnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        mBtnEditProfile.setOnClickListener(view -> showImageSelectDialog());
+
+        mBtnFinish.setOnClickListener(view -> finish());
+
+        mBtnEditPassword.setOnClickListener(view -> {
+            Intent passwordIntent = new Intent(HomeSettingActivity.this, ChangePasswordActivity.class);
+            startActivity(passwordIntent);
         });
 
-        mBtnEditPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent passwordIntent = new Intent(HomeSettingActivity.this, ChangePasswordActivity.class);
-                startActivity(passwordIntent);
-            }
-        });
-
-        mBtnEditTaste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tasteIntent = new Intent(HomeSettingActivity.this, ChangeTasteActivity.class);
-                startActivityForResult(tasteIntent, GET_USER_TASTE);
-            }
+        mBtnEditTaste.setOnClickListener(view -> {
+            Intent tasteIntent = new Intent(HomeSettingActivity.this, ChangeTasteActivity.class);
+            startActivityForResult(tasteIntent, GET_USER_TASTE);
         });
     }
 
     private void showImageSelectDialog() {
         final CharSequence[] addItems = {"갤러리에서 사진 가져오기", "기본 이미지로 설정하기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeSettingActivity.this, R.style.AlertDialogTheme);
-        builder.setItems(addItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        showPermissionDialog();
-                        dialogInterface.dismiss();
-                        break;
-                    case 1:
-                        mProfile.setImageResource(android.R.color.white);
-                        dialogInterface.dismiss();
-                        break;
-                }
+        builder.setItems(addItems, (dialogInterface, i) -> {
+            switch (i) {
+                case 0:
+                    showPermissionDialog();
+                    dialogInterface.dismiss();
+                    break;
+                case 1:
+                    mProfile.setImageResource(android.R.color.white);
+                    dialogInterface.dismiss();
+                    break;
             }
         });
 

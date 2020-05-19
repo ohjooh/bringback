@@ -23,8 +23,11 @@ import com.example.user.projectbringback.rcv.TasteInfoAdapter;
 import com.example.user.projectbringback.data.Music;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static com.example.user.projectbringback.data.Music.MUSICS;
 
 public class TasteInfoFragment extends Fragment {
     private List<Music> albumList = new ArrayList<>();
@@ -42,7 +45,7 @@ public class TasteInfoFragment extends Fragment {
         if (activity != null && getArguments() != null) {
             String tasteName = getArguments().getString("tasteName");
             activity.setSupportActionBar(toolbar);
-            Objects.requireNonNull(activity.getSupportActionBar()).setTitle(tasteName); //TODO Taste Name 받아오기
+            Objects.requireNonNull(activity.getSupportActionBar()).setTitle(tasteName);
             activity.getSupportActionBar().setHomeButtonEnabled(true);
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_ios_24px);
@@ -50,19 +53,17 @@ public class TasteInfoFragment extends Fragment {
             LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
             albumView.setLayoutManager(horizontalLayoutManager);
 
-            albumList.add(new Music("Pop Song", "Pop Singer", "Pop Album", "팝", "2019", 1));
-            albumList.add(new Music("Hip Song", "Hip Singer", "Hip Album", "랩/힙합", "2019", 1));
-            albumList.add(new Music("Ballad Song", "Ballad Singer", "Ballad Album", "발라드", "2019", 1));
-            albumList.add(new Music("Classic Song", "Classic Composer", "Classic Album", "클래식", "2019", 1));
-
+            initAlbumList();
             TasteInfoAdapter tasteInfoAdapter = new TasteInfoAdapter(getActivity(), albumList);
             albumView.setAdapter(tasteInfoAdapter);
+            tasteInfoAdapter.filter(tasteName);
 
             RecyclerView recommendedMusicView = view.findViewById(R.id.recommendedMusicView);
             LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, true);
             recommendedMusicView.setLayoutManager(verticalLayoutManager);
             RecommendMusicAdapter recommendMusicAdapter = new RecommendMusicAdapter(activity, albumList);
             recommendedMusicView.setAdapter(recommendMusicAdapter);
+            recommendMusicAdapter.filter(tasteName);
 
         }
         return view;
@@ -79,10 +80,13 @@ public class TasteInfoFragment extends Fragment {
 
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack();
+        Objects.requireNonNull(fragmentManager).popBackStack();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
 
+    private void initAlbumList(){
+        albumList.addAll(Arrays.asList(MUSICS));
+    }
 }

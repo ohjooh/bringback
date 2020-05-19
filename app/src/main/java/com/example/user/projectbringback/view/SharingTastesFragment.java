@@ -39,12 +39,9 @@ public class SharingTastesFragment extends Fragment {
         SharingTastesAdapter adapter = new SharingTastesAdapter(activity, tasteList);
         tastesView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new SharingTastesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SharingTastesAdapter.SharingTastesViewHolder holder, View view, int position) {
-                String tasteName = holder.tasteName.getText().toString();
-                loadFragment(tasteName);
-            }
+        adapter.setOnItemClickListener((holder, view1, position) -> {
+            String tasteName = holder.tasteName.getText().toString();
+            loadFragment(tasteName);
         });
 
         return view;

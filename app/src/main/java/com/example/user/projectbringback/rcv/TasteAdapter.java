@@ -19,7 +19,7 @@ public class TasteAdapter extends RecyclerView.Adapter<TasteAdapter.TasteViewHol
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        public void onItemClick(TasteViewHolder holder, View view, int position);
+        void onItemClick(TasteViewHolder holder, View view, int position);
     }
 
     public TasteAdapter(Context context, List<String> taste) {
@@ -31,17 +31,14 @@ public class TasteAdapter extends RecyclerView.Adapter<TasteAdapter.TasteViewHol
         public TextView tasteName;
         OnItemClickListener listener;
 
-        public TasteViewHolder(@NonNull View itemView) {
+        TasteViewHolder(@NonNull View itemView) {
             super(itemView);
             tasteName = itemView.findViewById(R.id.tasteName);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (listener != null)
-                        listener.onItemClick(TasteViewHolder.this, v, position);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null)
+                    listener.onItemClick(TasteViewHolder.this, v, position);
             });
         }
 

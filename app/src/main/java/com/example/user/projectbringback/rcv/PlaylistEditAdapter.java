@@ -22,7 +22,7 @@ public class PlaylistEditAdapter extends RecyclerView.Adapter<PlaylistEditAdapte
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        public void OnItemClick(PlaylistEditViewHolder holder, View view, int position);
+        void OnItemClick(PlaylistEditViewHolder holder, View view, int position);
     }
 
     public PlaylistEditAdapter(Context context, List<Music> musicList) {
@@ -31,25 +31,22 @@ public class PlaylistEditAdapter extends RecyclerView.Adapter<PlaylistEditAdapte
     }
 
     public class PlaylistEditViewHolder extends RecyclerView.ViewHolder {
-        public TextView songName;
+        TextView songName;
         public TextView singer;
-        public ImageView songImage;
-        public ImageButton btnItemMove;
+        ImageView songImage;
+        ImageButton btnItemMove;
         OnItemClickListener listener;
 
-        public PlaylistEditViewHolder(@NonNull View itemView) {
+        PlaylistEditViewHolder(@NonNull View itemView) {
             super(itemView);
             songName = itemView.findViewById(R.id.textPlaylistName);
             singer = itemView.findViewById(R.id.textNumberOfSong);
             songImage = itemView.findViewById(R.id.playlistImage);
             btnItemMove = itemView.findViewById(R.id.btnDeletePlaylist);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (listener != null)
-                        listener.OnItemClick(PlaylistEditViewHolder.this, v, position);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null)
+                    listener.OnItemClick(PlaylistEditViewHolder.this, v, position);
             });
         }
 
@@ -70,7 +67,6 @@ public class PlaylistEditAdapter extends RecyclerView.Adapter<PlaylistEditAdapte
     public void onBindViewHolder(@NonNull PlaylistEditViewHolder holder, int position) {
         holder.songName.setText(musicList.get(position).getName());
         holder.singer.setText(musicList.get(position).getSinger());
-//        holder.songImage.setImageDrawable();
         holder.btnItemMove.setImageDrawable(null);
         holder.setOnItemClickListener(listener);
 

@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="74dp"
+        android:layout_marginEnd="90dp"
         android:fontFamily="@font/nanum_barun_gothic"
         android:text="#취향1 #취향2 …"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

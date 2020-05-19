@@ -23,7 +23,7 @@ public class SharingTastesAdapter extends RecyclerView.Adapter<SharingTastesAdap
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        public void onItemClick(SharingTastesViewHolder holder, View view, int position);
+        void onItemClick(SharingTastesViewHolder holder, View view, int position);
     }
 
     public SharingTastesAdapter(Context context, List<Taste> tastes) {
@@ -32,22 +32,19 @@ public class SharingTastesAdapter extends RecyclerView.Adapter<SharingTastesAdap
     }
 
     public class SharingTastesViewHolder extends RecyclerView.ViewHolder {
-        public ImageView tasteImage;
+        ImageView tasteImage;
         public TextView tasteName;
         OnItemClickListener listener;
 
-        public SharingTastesViewHolder(@NonNull View itemView) {
+        SharingTastesViewHolder(@NonNull View itemView) {
             super(itemView);
             tasteImage = itemView.findViewById(R.id.tasteImage);
             tasteName = itemView.findViewById(R.id.tasteName);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (listener != null)
-                        listener.onItemClick(SharingTastesViewHolder.this, v, position);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null)
+                    listener.onItemClick(SharingTastesViewHolder.this, v, position);
             });
         }
 
@@ -68,7 +65,6 @@ public class SharingTastesAdapter extends RecyclerView.Adapter<SharingTastesAdap
     public void onBindViewHolder(@NonNull SharingTastesViewHolder holder, int position) {
         holder.tasteName.setText(tastes.get(position).getName());
         holder.setOnItemClickListener(listener);
-//        holder.tasteImage.setImageDrawable();
         Glide.with(context)
                 .asDrawable()
                 .load(tastes.get(position).getImage())

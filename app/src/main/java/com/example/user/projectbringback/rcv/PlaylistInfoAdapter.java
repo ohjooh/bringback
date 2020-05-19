@@ -23,7 +23,6 @@ import java.util.Locale;
 public class PlaylistInfoAdapter extends RecyclerView.Adapter<PlaylistInfoAdapter.PlaylistInfoViewHolder> implements PlaylistItemTouchHelper.OnItemMoveListener {
     private List<Music> musicList;
     private Context context;
-    private OnItemClickListener listener;
     private List<Music> filterList = new ArrayList<>();
 
     @Override
@@ -41,8 +40,8 @@ public class PlaylistInfoAdapter extends RecyclerView.Adapter<PlaylistInfoAdapte
         return true;
     }
 
-    public static interface OnItemClickListener {
-        public void onItemClick(PlaylistInfoViewHolder holder, View view, int position);
+    public interface OnItemClickListener {
+        void onItemClick(PlaylistInfoViewHolder holder, View view, int position);
     }
 
     public PlaylistInfoAdapter(List<Music> musicList, Context context) {
@@ -75,7 +74,7 @@ public class PlaylistInfoAdapter extends RecyclerView.Adapter<PlaylistInfoAdapte
         ImageButton btnItemMove;
         OnItemClickListener listener;
 
-        public PlaylistInfoViewHolder(@NonNull final View itemView) {
+        PlaylistInfoViewHolder(@NonNull final View itemView) {
             super(itemView);
             songName = itemView.findViewById(R.id.textPlaylistName);
             singer = itemView.findViewById(R.id.textNumberOfSong);
@@ -103,10 +102,6 @@ public class PlaylistInfoAdapter extends RecyclerView.Adapter<PlaylistInfoAdapte
         holder.singer.setTextColor(Color.WHITE);
         holder.songImage.setImageDrawable(null);
         holder.btnItemMove.setImageResource(R.drawable.ic_sort);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 
     @Override

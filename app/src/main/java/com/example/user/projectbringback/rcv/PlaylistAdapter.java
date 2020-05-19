@@ -26,8 +26,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     private Context context;
     private OnItemClickListener listener;
 
-    public static interface OnItemClickListener {
-        public void onItemClick(PlaylistViewHolder holder, View view, int position);
+    public interface OnItemClickListener {
+        void onItemClick(PlaylistViewHolder holder, View view, int position);
     }
 
     public PlaylistAdapter(List<Playlist> playlist, Context context) {
@@ -36,26 +36,23 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     }
 
     public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
-        public TextView playlistName;
-        public TextView numberOfSong;
-        public ImageView playlistImage;
-        public ImageButton btnDeletePlaylist;
+        TextView playlistName;
+        TextView numberOfSong;
+        ImageView playlistImage;
+        ImageButton btnDeletePlaylist;
         OnItemClickListener listener;
 
-        public PlaylistViewHolder(@NonNull View itemView) {
+        PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
             playlistName = itemView.findViewById(R.id.textPlaylistName);
             numberOfSong = itemView.findViewById(R.id.textNumberOfSong);
             playlistImage = itemView.findViewById(R.id.playlistImage);
             btnDeletePlaylist = itemView.findViewById(R.id.btnDeletePlaylist);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (listener != null) {
-                        listener.onItemClick(PlaylistViewHolder.this, view, position);
-                    }
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (listener != null) {
+                    listener.onItemClick(PlaylistViewHolder.this, view, position);
                 }
             });
         }
@@ -79,11 +76,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         holder.numberOfSong.setText(MessageFormat.format("{0}곡", playlist.get(position).getNumberOfSong()));
         holder.setOnItemClickListener(listener);
 
-        holder.btnDeletePlaylist.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                RemovePlaylistDialog(position);
-            }
-        });
+        holder.btnDeletePlaylist.setOnClickListener(v -> RemovePlaylistDialog(position));
     }
 
     @Override
@@ -102,22 +95,14 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         Button btnRemovePlaylist = removePlaylistDialog.findViewById(R.id.btnRemovePlaylist);
         Button btnCancel = removePlaylistDialog.findViewById(R.id.btnCancel);
 
-        btnRemovePlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, playlist.get(position).getName()+" 을(를) 삭제했습니다.", Toast.LENGTH_SHORT).show();
-                playlist.remove(position);
-                notifyDataSetChanged();
-                removePlaylistDialog.dismiss();
-            }
+        btnRemovePlaylist.setOnClickListener(view -> {
+            Toast.makeText(context, playlist.get(position).getName()+" 을(를) 삭제했습니다.", Toast.LENGTH_SHORT).show();
+            playlist.remove(position);
+            notifyDataSetChanged();
+            removePlaylistDialog.dismiss();
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removePlaylistDialog.cancel();
-            }
-        });
+        btnCancel.setOnClickListener(view -> removePlaylistDialog.cancel());
 
         removePlaylistDialog.show();
     }

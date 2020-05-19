@@ -23,11 +23,11 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
         this.context = context;
     }
 
-    public static class MusicListViewHolder extends RecyclerView.ViewHolder {
-        public TextView album_songName;
-        public TextView album_songNum;
+    static class MusicListViewHolder extends RecyclerView.ViewHolder {
+        TextView album_songName;
+        TextView album_songNum;
 
-        public MusicListViewHolder(@NonNull View itemView) {
+        MusicListViewHolder(@NonNull View itemView) {
             super(itemView);
             album_songName = itemView.findViewById(R.id.album_songName);
             album_songNum= itemView.findViewById(R.id.album_songNum);
